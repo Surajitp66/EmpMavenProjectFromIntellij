@@ -22,7 +22,7 @@ public class EmpServiceImpl implements EmpService {
         list.add(new Emp(1, "Surajit", 6000, "A", 24, "asdf@gmai.com"));
         list.add(new Emp(2, "Rohit", 900, "A", 28, "qewwrgfb@gmai.com"));
         list.add(new Emp(3, "Raj", 8933, "A", 22, "hyrre@gmai.com"));
-        list.add(new Emp(4, "Amit", 1000, "I", 29, "ryrf@gmai.com"));
+        list.add(new Emp(4, "mita", 1000, "I", 29, "ryrf@gmai.com"));
         list.add(new Emp(5, "Rima", 7000, "I", 79, "drdc@gmai.com"));
     }
 
