@@ -2,18 +2,20 @@ package com.example.newEmp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+//import lombok.Getter;
+//import lombok.Setter;
 
 /*import javax.validation.constraints.Email;
 import javax.validation.constraints.Max;*/
 //import javax.validation.constraints.Min;
 //import javax.validation.constraints.NotNull;
 //123456
-@Getter
-@Setter
+//@Getter
+//@Setter
 @NoArgsConstructor
+@Data
 @Entity
 @Table(name = "Employee1")
 public class Emp {
@@ -21,17 +23,20 @@ public class Emp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @NotNull
+    @NotBlank(message = "Please provide valid name")
+    @Size(min = 3, max = 20, message = "Name should be minimum 3 character and maximum 20 ")
     private String name;
     private Integer salary;
+    @NotBlank
+    @Size(max = 1, message = "Maximum 1 character allow")
     private String status;
     @NotNull(message = "Age not valid")
-    @Min(18)
-    @Max(100)
+    @Min(value = 18, message = "Minimum age should be 18")
+    @Max(value = 100, message = "Maximum age not more than 100")
     private Integer age;
 
     @NotBlank
-    @Email
+    @Email(message = "Please provide a valid Email address")
     private String email;
 
 
@@ -92,15 +97,16 @@ public class Emp {
 //        this.email = email;
 //    }
 
-    @Override
-    public String toString() {
-        return "Emp{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", salary=" + salary +
-                ", status='" + status + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "Emp{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", salary=" + salary +
+//                ", status='" + status + '\'' +
+//                ", age=" + age +
+//                ", email='" + email + '\'' +
+//                '}';
+//    }
+
 }

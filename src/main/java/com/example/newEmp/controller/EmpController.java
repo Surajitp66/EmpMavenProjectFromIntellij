@@ -85,7 +85,7 @@ public class EmpController {
     }
 
 
-    @PostMapping("/addEmpSQL")
+    @PostMapping("/addEmpSQLValid")
     public ResponseEntity<Object> addEmpByIdDB(@Valid @RequestBody Emp emp, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(Objects.requireNonNull(bindingResult.getFieldError()).getDefaultMessage(), HttpStatus.BAD_REQUEST);
@@ -93,6 +93,18 @@ public class EmpController {
         }
 
 
+        Object em = empNewService.addEmpByIdDB(emp);
+
+        EmpResponse res = new EmpResponse();
+        res.setEmpRes(em);
+        res.setMessage("successfully added");
+        return new ResponseEntity<Object>(res, HttpStatus.OK);
+
+
+    }
+
+    @PostMapping("/addEmpSQL")
+    public ResponseEntity<Object> addEmpByIdDB(@RequestBody Emp emp) {
         Object em = empNewService.addEmpByIdDB(emp);
 
         EmpResponse res = new EmpResponse();
