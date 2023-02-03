@@ -2,6 +2,7 @@ package com.example.newEmp.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 //import lombok.Getter;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Max;*/
 //@Getter
 //@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "Employee1")
@@ -22,6 +24,7 @@ public class Emp {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     @NotBlank(message = "Please provide valid name")
     @Size(min = 3, max = 20, message = "Name should be minimum 3 character and maximum 20 ")
@@ -40,14 +43,14 @@ public class Emp {
     private String email;
 
 
-    public Emp(Integer id, String name, Integer salary, String status, Integer age, String email) {
+   /* public Emp(Integer id, String name, Integer salary, String status, Integer age, String email) {
         this.id = id;
         this.name = name;
         this.salary = salary;
         this.status = status;
         this.age = age;
         this.email = email;
-    }
+    }*/
 
 //    public Integer getId() {
 //        return id;

@@ -1,0 +1,31 @@
+server:
+  port: 9001
+
+logging:
+  level:
+    root: INFO
+    #For particular packages
+    com:
+      example:
+        newEmp:
+          controller: DEBUG
+  file: /C:/Users/surajitp66/Documents/Log_file/myapp.log
+#My SQL Server
+
+spring:
+  application:
+    name: EMP-SERVICE
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/employee
+    username: root
+    password: admin
+    driver-class-name=com: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka

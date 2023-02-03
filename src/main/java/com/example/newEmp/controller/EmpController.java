@@ -5,28 +5,29 @@ import com.example.newEmp.domain.EmpResponse;
 import com.example.newEmp.entity.Emp;
 import com.example.newEmp.service.EmpService;
 import jakarta.validation.Valid;
-import jakarta.validation.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.ServletWebRequest;
 
 import java.util.Objects;
+import java.util.Optional;
 
 
 @RestController
-
+@RequestMapping("/emp")
 public class EmpController {
 
+    private Logger logger = LoggerFactory.getLogger(EmpController.class);
     @Autowired
     private EmpService empNewService;
     @Autowired
     private EmpDao empDao;
 
-    @GetMapping("/emp")
+    @GetMapping("")
     public Emp getEmp() {
 
         return new Emp(1, "Surajit", 2000, "A", 24, "asdf@gmai.com");
@@ -81,6 +82,7 @@ public class EmpController {
         EmpResponse res = new EmpResponse();
         res.setEmpRes(empNewService.getAllEmps());
         res.setMessage("All Employees");
+        logger.info("All emp info {}", res.getEmpRes());
         return new ResponseEntity<EmpResponse>(res, HttpStatus.OK);
     }
 
@@ -110,6 +112,7 @@ public class EmpController {
         EmpResponse res = new EmpResponse();
         res.setEmpRes(em);
         res.setMessage("successfully added");
+        logger.info("Emp Added {}", em);
         return new ResponseEntity<Object>(res, HttpStatus.OK);
 
 
@@ -140,11 +143,21 @@ public class EmpController {
     }*/
 
     @GetMapping("/empByIdSQL/{id}")
-    public ResponseEntity<EmpResponse> getEmpByIdDB(@PathVariable("id") Integer id) {
+    public ResponseEntity<Object> getEmpByIdDB(@PathVariable("id") Integer id) {
         EmpResponse res = new EmpResponse();
-        res.setEmpRes(empNewService.getEmpByIdDB(id));
-        res.setMessage(HttpStatus.OK.toString());
-        return new ResponseEntity<EmpResponse>(res, HttpStatus.OK);
+        Object empByIdDB = empNewService.getEmpByIdDB(id);
+        res.setEmpRes(empByIdDB);
+        logger.debug("Id found {}", res.getEmpRes());
+
+        if (empByIdDB == Optional.empty()) {
+            return new ResponseEntity<Object>("Id not found!", HttpStatus.BAD_REQUEST);
+
+        } else {
+
+            res.setMessage(HttpStatus.OK.toString());
+            return new ResponseEntity<Object>(res, HttpStatus.OK);
+
+        }
     }
 
 //    @GetMapping("/empByIdSQL/{id}/{name}")
@@ -161,6 +174,7 @@ public class EmpController {
         EmpResponse res = new EmpResponse();
         res.setEmpRes(empNewService.empDeleteById(id));
         res.setMessage("Delete Successful");
+        logger.debug("Deleted emp {}", res.getEmpRes());
         return new ResponseEntity<EmpResponse>(res, HttpStatus.OK);
     }
 }
